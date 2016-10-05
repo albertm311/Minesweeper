@@ -14,7 +14,8 @@ public class Main {
 		myFrame.addMouseListener(myMouseAdapter);
 
 		//CCCCCCCokwkejfhjkwefhkasjfhkajhfkjahdk
-		
+		System.out.println("Hola Mundo!");
+
 		myFrame.setVisible(true);
 	}
 }
