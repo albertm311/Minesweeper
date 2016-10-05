@@ -13,6 +13,8 @@ public class Main {
 		MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
 		myFrame.addMouseListener(myMouseAdapter);
 
+		//CCCCCCCokwkejfhjkwefhkasjfhkajhfkjahdk
+		
 		myFrame.setVisible(true);
 	}
 }
