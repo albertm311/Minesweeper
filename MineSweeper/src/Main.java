@@ -15,9 +15,9 @@ public class Main {
 		MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
 		myFrame.addMouseListener(myMouseAdapter);
 
-		//		Counter counter = new Counter();
-		//		//counter.getTime();	
-		//		myFrame.add(counter);
+		Counter counter = new Counter();
+		myFrame.add(counter);
+		
 		myFrame.setVisible(true);
 
 

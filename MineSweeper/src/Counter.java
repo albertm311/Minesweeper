@@ -1,76 +1,23 @@
-import java.awt.Color;
-import java.awt.Font;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
-
-public class Counter implements ActionListener 
-{
-
-	private JLabel bombsLeft;
-	private JLabel timeRun = new JLabel(getTime());
-	private int flagLabelCounter;
-	private int actualTime= 0;
-
-
-	public Counter(int  numberOfBombs)
-	{
-		flagLabelCounter=  numberOfBombs;
-		timeRun = new JLabel(getTime());
-		bombsLeft = new JLabel(Integer.toString(flagLabelCounter));
-	}
-	public JLabel getBombsLeft()
-	{
-		bombsLeft.setFont(new Font(null, Font.BOLD, 30));
-		bombsLeft.setBackground(Color.black);
-		bombsLeft.setForeground(Color.red);
-		return bombsLeft;
-	}
-
-	public void setFlagsLabel(int increaseORDecrease)
-	{
-		flagLabelCounter -=  increaseORDecrease;
-		bombsLeft.setText(Integer.toString(flagLabelCounter));
-	}
-
-	public JLabel timerFormat()
-	{
-		timeRun.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-		timeRun.setBackground(Color.black);
-		timeRun.setForeground(Color.MAGENTA);
-		return timeRun;
-	}
-
-	public String getTime()
-	{	
-		if(actualTime < 10)
-			return "00" + actualTime;
-		else if(actualTime < 100)
-			return "0" + actualTime;
-		else
-			return "" + actualTime;
-	}
-
-	//Counts the seconds and sets the time to the timer.
-	public void actionPerformed(ActionEvent arg0) 
-	{	
-		actualTime++;
-		timeRun.setText(getTime());
-	}
-}
-
-//-------------------------------------------------------------------
-
-/*import javax.swing.JLabel;
 
 public class Counter extends JLabel
 {
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4417929666170287931L;
 
-	// data fields
-	private int actualTime = 0;
+
+	private JButton reset;
+	private int actualMines = 10;
 	private  String DESCRIPTION;
 
 	public Counter()
@@ -78,44 +25,55 @@ public class Counter extends JLabel
 		super();
 		reset();
 	}
-	public void setDifficultyModeLabel(String difficultyMode){
-		DESCRIPTION = "Turns Taken: ";
+	public void setMineLabel(String mines){
+		DESCRIPTION = "Mines: ";
 		setHorizontalTextPosition(JLabel.LEFT);
 	}
 
-	public int getNumOfTurns(){
-		return this.actualTime;
-		}
+	public int getNumOfMines() {
+		return this.actualMines;
+	}
 
- *//**
- * Update the text label with the current counter value
- *//*
+	/**
+	 * Update the text label with the current counter value
+	 */
 	private void update()
 	{
-		setText(DESCRIPTION + Integer.toString(this.actualTime));
+		setText(DESCRIPTION + Integer.toString(this.actualMines));
 		setHorizontalTextPosition(JLabel.LEFT);
 	}
 
-  *//**
-  * Default constructor, starts counter at 0
-  *//*
 
-
-   *//**
-   * Increments the counter and updates the text label
-   *//*
-	public void increment()
+	/**
+	 * Increments the counter 
+	 */
+	public void decrement()
 	{
-		this.actualTime++;
+		
+		this.actualMines--;
 		update();
 	}
 
-    *//**
-    * Resets the counter to zero and updates the text label
-    *//*
+	/**
+	 * Resets the counter of mines to zero 
+	 */
 	public void reset()
 	{
-		this.actualTime = 0;
+		this.actualMines = 10;
 		update();
 	}
-}*/
+
+	public void resetButton(){
+		Icon p = new ImageIcon(getClass().getResource("blue.png"));
+		reset = new JButton("Reset" + p);
+		reset.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				reset.setText("Reset");
+			}
+
+		});
+		add(reset);
+	}
+}
