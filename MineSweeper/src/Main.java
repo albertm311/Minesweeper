@@ -1,5 +1,7 @@
 import javax.swing.JFrame;
 
+//import Minesweeper.Counter;
+
 public class Main {
 	public static void main(String[] args) {
 		JFrame myFrame = new JFrame("Color Grid");
@@ -13,9 +15,11 @@ public class Main {
 		MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
 		myFrame.addMouseListener(myMouseAdapter);
 
-		//CCCCCCCokwkejfhjkwefhkasjfhkajhfkjahdk
-		System.out.println("Hola Mundo!");
-
+		//		Counter counter = new Counter();
+		//		//counter.getTime();	
+		//		myFrame.add(counter);
 		myFrame.setVisible(true);
+
+
 	}
 }
