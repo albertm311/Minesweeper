@@ -92,7 +92,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							Color newColor = Color.GRAY;
 
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();
 						}
 					}
@@ -122,7 +122,7 @@ public class MyMouseAdapter extends MouseAdapter {
 						} else {
 							Color newColor = Color.RED;
 
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();
 						}
 					}
