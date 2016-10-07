@@ -1,4 +1,8 @@
 import javax.swing.JFrame;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JComboBox;
 
 //import Minesweeper.Counter;
 
@@ -10,13 +14,22 @@ public class Main {
 		myFrame.setSize(400, 400);
 
 		MyPanel myPanel = new MyPanel();
-		myFrame.add(myPanel);
+		myFrame.getContentPane().add(myPanel);
+		
+		JLabel lblFlagsLeft = new JLabel("Flags Left: ");
+		myPanel.add(lblFlagsLeft);
+		
+		JButton btnReset = new JButton("RESET");
+		myPanel.add(btnReset);
+		
+		JLabel lblTime = new JLabel("Time: ");
+		myPanel.add(lblTime);
 
 		MyMouseAdapter myMouseAdapter = new MyMouseAdapter();
 		myFrame.addMouseListener(myMouseAdapter);
 
-		Counter counter = new Counter();
-		myFrame.add(counter);
+//		Counter counter = new Counter();
+//		myFrame.add(counter);
 		
 		myFrame.setVisible(true);
 
