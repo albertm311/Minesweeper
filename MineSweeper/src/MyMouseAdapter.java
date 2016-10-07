@@ -21,22 +21,20 @@ public class MyMouseAdapter extends MouseAdapter {
 		JFrame myFrame = (JFrame) c;
 		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);
 		Insets myInsets = myFrame.getInsets();
-		
+		int x1 = myInsets.left;
+		int y1 = myInsets.top;
+		e.translatePoint(-x1, -y1);
+		int x = e.getX();
+		int y = e.getY();
+		myPanel.x = x;
+		myPanel.y = y;
+		myPanel.mouseDownGridX = myPanel.getGridX(x, y);
+		myPanel.mouseDownGridY = myPanel.getGridY(x, y);
+		myPanel.repaint();
+
 		switch (e.getButton()) {
 		case 1: // Left mouse button
 
-			
-			int x1 = myInsets.left;
-			int y1 = myInsets.top;
-			e.translatePoint(-x1, -y1);
-			int x = e.getX();
-			int y = e.getY();
-			myPanel.x = x;
-			myPanel.y = y;
-			myPanel.mouseDownGridX = myPanel.getGridX(x, y);
-			myPanel.mouseDownGridY = myPanel.getGridY(x, y);
-			myPanel.repaint();
-			break;
 		case 3: // Right mouse button
 
 			break;
@@ -57,7 +55,7 @@ public class MyMouseAdapter extends MouseAdapter {
 		JFrame myFrame = (JFrame) c;
 		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0); 
 		Insets myInsets = myFrame.getInsets();
-		
+
 		int x1 = myInsets.left;
 		int y1 = myInsets.top;
 		e.translatePoint(-x1, -y1);
@@ -67,11 +65,11 @@ public class MyMouseAdapter extends MouseAdapter {
 		myPanel.y = y;
 		int gridX = myPanel.getGridX(x, y);
 		int gridY = myPanel.getGridY(x, y);
-		
+
 		switch (e.getButton()) {
 		case 1: // Left mouse button
-			
-			
+
+
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1) || (myPanel.mouseDownGridX > 8)
 					|| (myPanel.mouseDownGridY > 8)) {
 				// Had pressed outside
@@ -90,9 +88,11 @@ public class MyMouseAdapter extends MouseAdapter {
 						// was pressed
 						if ((gridX > 8) && (gridY > 8)) {
 						} else {
+							if(myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)){
+								break;
+							}
 							Color newColor = Color.GRAY;
-
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();
 						}
 					}
@@ -120,14 +120,23 @@ public class MyMouseAdapter extends MouseAdapter {
 						// was pressed
 						if ((gridX > 8) && (gridY > 8)) {
 						} else {
+							if (myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.WHITE)){
 							Color newColor = Color.RED;
-
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();
+							} else if (myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)){
+								break;
+							} else if(myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)){
+								Color newColor = Color.WHITE;
+								myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+								myPanel.repaint();
+							}
 						}
 					}
 				}
 			}
+			myPanel.repaint();
+			break;
 		default: // Some other button (2 = Middle mouse button, etc.)
 			// Do nothing
 			break;
