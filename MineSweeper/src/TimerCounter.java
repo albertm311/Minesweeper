@@ -12,7 +12,6 @@ public class TimerCounter {
 			return "0"+seconds;
 		else
 			return ""+seconds;
-
 	}
 
 	public void doStuff(){
