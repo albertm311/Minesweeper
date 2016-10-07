@@ -28,12 +28,14 @@ public class MyPanel extends JPanel {
 	public Color[][] mineField = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		for (int i = 0; i < numberMinesEasy; i++){
-			Random generator = new Random();
-			int x = generator.nextInt(TOTAL_COLUMNS);
-			int y = generator.nextInt(TOTAL_ROWS);
+			for (int j = 0; j < 1; j++){
+				Random generator = new Random();
+				int x = generator.nextInt(TOTAL_COLUMNS);
+				int y = generator.nextInt(TOTAL_ROWS);
 
-			if(minesOnField[x][y] == false){
-				minesOnField[x][y] = true;
+				if(minesOnField[x][y] == false){
+					minesOnField[x][y] = true;
+				}
 			}
 		}
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {    //Use of "random" to prevent unwanted Eclipse warning
@@ -150,9 +152,9 @@ public class MyPanel extends JPanel {
 
 	public boolean isMine(int x, int y){
 		if(minesOnField[x][y] == true){
-			return true;
+
 		}
-		return false;
+		return true;
 	}
 
 	public int flagCounter (){
@@ -170,6 +172,5 @@ public class MyPanel extends JPanel {
 		else
 			return ""+seconds;
 	}
-
 
 }
