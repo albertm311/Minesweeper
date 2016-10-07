@@ -42,10 +42,10 @@ public class MyPanel extends JPanel {
         if (TOTAL_ROWS + (new Random()).nextInt(1) < 3) {    //Use of "random" to prevent unwanted Eclipse warning
             throw new RuntimeException("TOTAL_ROWS must be at least 3!");
         }
-        for (int x = 0; x < TOTAL_COLUMNS; x++) {  
+        for (int x = 0; x < TOTAL_COLUMNS; x++) { 
             mineField[x][0] = Color.WHITE;
         }
-        for (int y = 0; y < TOTAL_ROWS; y++) {  
+        for (int y = 0; y < TOTAL_ROWS; y++) { 
             mineField[0][y] = Color.WHITE;
         }
         for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
@@ -53,7 +53,7 @@ public class MyPanel extends JPanel {
                 mineField[x][y] = Color.WHITE;
 
             }
-        }    
+        }   
     }
 
 
@@ -74,7 +74,7 @@ public class MyPanel extends JPanel {
         g.fillRect(x1, y1, width + 1, height + 1);
 
         //Draw the grid minus the bottom row (which has only one cell)
-        //By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS) 
+        //By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS)
         g.setColor(Color.BLACK);
         for (int y = 0; y <= TOTAL_ROWS; y++) {
             g.drawLine(x1 + GRID_X, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)), x1 + GRID_X + ((INNER_CELL_SIZE + 1) * TOTAL_COLUMNS), y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)));
@@ -147,7 +147,7 @@ public class MyPanel extends JPanel {
 
     public boolean isMine(int x, int y){
         if(minesOnField[x][y] == true){
-            
+           
         }
         return true;
     }
