@@ -12,12 +12,27 @@ public class MyPanel extends JPanel {
 	private static final int INNER_CELL_SIZE = 29;
 	private static final int TOTAL_COLUMNS = 9;
 	private static final int TOTAL_ROWS = 9;   //Last row has only one cell
+
+	public int numberMinesEasy = 10;
+	public boolean minesOnField[][] = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
+
 	public int x = -1;
 	public int y = -1;
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
-	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
+	public Color[][] mineField = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
+		for (int i = 0; i < numberMinesEasy; i++){
+			for (int j = 0; j < 1; j++){
+				Random generator = new Random();
+				int x = generator.nextInt(TOTAL_COLUMNS);
+				int y = generator.nextInt(TOTAL_ROWS);
+
+				if(minesOnField[x][y] == false){
+					minesOnField[x][y] = true;
+				}
+			}
+		}
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
 		}
@@ -28,17 +43,20 @@ public class MyPanel extends JPanel {
 			throw new RuntimeException("TOTAL_ROWS must be at least 3!");
 		}
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {  
-			colorArray[x][0] = Color.WHITE;
+			mineField[x][0] = Color.WHITE;
 		}
 		for (int y = 0; y < TOTAL_ROWS; y++) {  
-			colorArray[0][y] = Color.WHITE;
+			mineField[0][y] = Color.WHITE;
 		}
 		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 1; y < TOTAL_ROWS; y++) {
-				colorArray[x][y] = Color.WHITE;
+				mineField[x][y] = Color.WHITE;
+
 			}
-		}
+		}	
 	}
+
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -69,7 +87,7 @@ public class MyPanel extends JPanel {
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				if ((x == 0) || (y != TOTAL_ROWS)) {
-					Color c = colorArray[x][y];
+					Color c = mineField[x][y];
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
 				}
@@ -125,5 +143,12 @@ public class MyPanel extends JPanel {
 			return -1;
 		}
 		return y;
+	}
+
+	public boolean isMine(int x, int y){
+		if(minesOnField[x][y] == true){
+			
+		}
+		return true;
 	}
 }
