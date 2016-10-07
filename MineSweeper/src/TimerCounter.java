@@ -1,5 +1,5 @@
 public class TimerCounter {
-	
+
 	public static int seconds = 0;
 
 
@@ -7,16 +7,16 @@ public class TimerCounter {
 	{
 
 		if(seconds < 10)
-			return "00"+seconds;
+			return "00"+ seconds;
 		else if(seconds < 100)
-			return "0"+seconds;
+			return "0"+ seconds;
 		else
-			return ""+seconds;
+			return ""+ seconds;
 	}
 
 	public void doStuff(){
 		//do stuff here
 		seconds++;
-		
+
 	}
 }
