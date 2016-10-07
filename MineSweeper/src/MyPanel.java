@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
@@ -13,7 +15,7 @@ public class MyPanel extends JPanel {
 	private static final int TOTAL_COLUMNS = 9;
 	private static final int TOTAL_ROWS = 9;   //Last row has only one cell
 
-	private int seconds= 0;
+	
 
 	public int numberFlagsEasy = 10; //Number of Flags
 
@@ -27,6 +29,7 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridY = 0;
 	public Color[][] mineField = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
+		
 		for (int i = 0; i < numberMinesEasy; i++){
 			for (int j = 0; j < 1; j++){
 				Random generator = new Random();
@@ -58,7 +61,7 @@ public class MyPanel extends JPanel {
 				mineField[x][y] = Color.WHITE;
 
 			}
-		}   
+		}
 	}
 
 
@@ -160,17 +163,8 @@ public class MyPanel extends JPanel {
 	public int flagCounter (){
 		return 0;
 	}
-
-
-	public String getTime()
-	{	
-		seconds ++;
-		if(seconds < 10)
-			return "00"+seconds;
-		else if(seconds < 100)
-			return "0"+seconds;
-		else
-			return ""+seconds;
-	}
+	
+	
+	
 
 }
