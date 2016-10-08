@@ -97,7 +97,7 @@ public class Main {
 		});
 		myPanel.add(btnReset);
 
-		lblTime.setBounds(313, 28, 110, 15);
+		lblTime.setBounds(313, 28, 136, 15);
 		lblTime.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTime.setFont(new Font("Goudy Stout", Font.PLAIN, 12));
 		myPanel.add(lblTime);
