@@ -15,11 +15,6 @@ public class MyPanel extends JPanel {
 	private static final int TOTAL_COLUMNS = 9;
 	private static final int TOTAL_ROWS = 9;   //Last row has only one cell
 
-	
-
-	public int numberFlagsEasy = 10; //Number of Flags
-
-
 	public int numberMinesEasy = 10;
 	public boolean minesOnField[][] = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 
@@ -78,7 +73,8 @@ public class MyPanel extends JPanel {
 		int height = y2 - y1;
 
 		//Paint the background
-		g.setColor(Color.LIGHT_GRAY);
+		Color myNewBlue = new Color (178, 255, 102);  //creates your new color
+		g.setColor(myNewBlue);
 		g.fillRect(x1, y1, width + 1, height + 1);
 
 		//Draw the grid minus the bottom row (which has only one cell)
@@ -159,12 +155,4 @@ public class MyPanel extends JPanel {
 		}
 		return true;
 	}
-
-	public int flagCounter (){
-		return 0;
-	}
-	
-	
-	
-
 }

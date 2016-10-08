@@ -2,7 +2,6 @@ public class TimerCounter {
 
 	public static int seconds = 0;
 
-
 	public static String getTime()
 	{
 
@@ -19,4 +18,5 @@ public class TimerCounter {
 		seconds++;
 
 	}
+	
 }
