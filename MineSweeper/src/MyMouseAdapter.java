@@ -21,7 +21,7 @@ public class MyMouseAdapter extends MouseAdapter {
 				return;
 			}
 		}
-		
+
 
 		JFrame myFrame = (JFrame) c;
 		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);
@@ -100,7 +100,7 @@ public class MyMouseAdapter extends MouseAdapter {
 									Color newColor = Color.BLACK;
 									myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 									myPanel.repaint();	
-									
+
 									JOptionPane.showMessageDialog(myFrame, "BOOM!...Game Over!");
 									ActionListener();
 									break;
@@ -165,11 +165,11 @@ public class MyMouseAdapter extends MouseAdapter {
 		}
 	}
 	private void ActionListener() {
-	//System.exit(0);
+		//System.exit(0);
 		Main.masterFrame.dispose();
 		MyMouseAdapter.flags = 10;
 		TimerCounter.seconds = 0;
-	Main.main(null);
+		Main.main(null);
 		//Main.masterFrame.dispose();
 		;
 
@@ -183,3 +183,5 @@ public class MyMouseAdapter extends MouseAdapter {
 
 	}
 }
+
+
