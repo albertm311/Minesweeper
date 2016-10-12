@@ -1,11 +1,13 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
@@ -19,6 +21,7 @@ public class MyMouseAdapter extends MouseAdapter {
 				return;
 			}
 		}
+		
 
 		JFrame myFrame = (JFrame) c;
 		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);
@@ -97,6 +100,9 @@ public class MyMouseAdapter extends MouseAdapter {
 									Color newColor = Color.BLACK;
 									myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 									myPanel.repaint();	
+									
+									JOptionPane.showMessageDialog(myFrame, "BOOM!...Game Over!");
+									ActionListener();
 									break;
 								}
 							}
@@ -158,6 +164,17 @@ public class MyMouseAdapter extends MouseAdapter {
 			break;
 		}
 	}
+	private void ActionListener() {
+	//System.exit(0);
+		Main.masterFrame.dispose();
+		MyMouseAdapter.flags = 10;
+		TimerCounter.seconds = 0;
+	Main.main(null);
+		//Main.masterFrame.dispose();
+		;
+
+	}
+
 	public static String getFlags(){
 		if(flags <= 0){
 			return "0";

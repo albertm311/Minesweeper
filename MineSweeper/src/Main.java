@@ -19,7 +19,6 @@ public class Main {
 	static JLabel lblTime;
 	private static JLabel lblFlags;
 	static JFrame masterFrame;
-	//static String flagsMax = MyMouseAdapter.getFlags();
 
 	public static void main(String[] args) {
 		masterFrame = initialize();
@@ -86,7 +85,6 @@ public class Main {
 
 				if (e.getSource() == btnReset) {
 					MyMouseAdapter.flags = 10;
-					//flags = 10;
 					timer.cancel();
 					TimerCounter.seconds = 0;
 					masterFrame.dispose();
