@@ -5,9 +5,6 @@ import java.awt.Insets;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -21,6 +18,7 @@ public class MyPanel extends JPanel {
 
 	public int numberMinesEasy = 15;
 	public boolean minesOnField[][] = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
+	public String[][] numGrid = new String[TOTAL_COLUMNS][TOTAL_ROWS];
 
 	public int x = -1;
 	public int y = -1;

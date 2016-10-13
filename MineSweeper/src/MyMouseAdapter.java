@@ -6,11 +6,13 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class MyMouseAdapter extends MouseAdapter {
 	public static int flags = 14;
-
+	//public static JLabel numbers;
+//---
 	public void mousePressed(MouseEvent e) {
 		Component c = e.getComponent();
 		while (!(c instanceof JFrame)) {
@@ -46,7 +48,6 @@ public class MyMouseAdapter extends MouseAdapter {
 			break;
 		}
 	}
-
 	public void mouseReleased(MouseEvent e) {
 		Component c = e.getComponent();
 		while (!(c instanceof JFrame)) {
@@ -71,7 +72,6 @@ public class MyMouseAdapter extends MouseAdapter {
 
 		switch (e.getButton()) {
 		case 1: // Left mouse button
-
 
 			if ((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1) || (myPanel.mouseDownGridX > 8)
 					|| (myPanel.mouseDownGridY > 8)) {
@@ -235,14 +235,24 @@ public class MyMouseAdapter extends MouseAdapter {
 			counter ++;
 		} 
 
-		//
-		if (counter > 0){
-			//Set The Number on Tile
-			Color newColor =  Color.GRAY;
+		//Set The Number on Tile
+		if (counter > 0) {
+
+			Color newColor =  Color.BLUE;
 			panel.mineField[x][y] = newColor;
+
+
+
+
+			JLabel numbers = new JLabel("" + counter);
+			//numbers.setText("" + counter);
+			numbers.setLocation(x,y);
+			numbers.setVisible(true);
+			panel.add(numbers);
+			panel.repaint();
 			System.out.println(counter);
 
-		} else {
+		}else {
 			//If Not Mine Found
 			if((x - 1 >= 0 && x - 1 < 9)
 					&&  (y >= 0 && y < 9) 
@@ -251,7 +261,7 @@ public class MyMouseAdapter extends MouseAdapter {
 					&& !panel.isMine(x - 1, y)){
 				Color newColor =  Color.GRAY;
 				panel.mineField[x - 1][y] = newColor;
-				checkBombs(panel, x - 1, y);
+				checkBombs(panel, x - 1, y);	
 			} 
 			if((x - 1 >= 0 && x - 1 < 9)
 					&&  (y -1 >= 0 && y -1 < 9) 
