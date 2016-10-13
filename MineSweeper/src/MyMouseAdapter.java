@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 
 public class MyMouseAdapter extends MouseAdapter {
 	public static int flags = 14;
+	public static int grayTiles = 0;
+	public static int redTiles = 0;
 
 	public void mousePressed(MouseEvent e) {
 		Component c = e.getComponent();
@@ -123,6 +125,35 @@ public class MyMouseAdapter extends MouseAdapter {
 							myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							checkBombs(myPanel, myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 							myPanel.repaint();
+							grayTiles++;
+
+
+							for(int i = 0; i < 8; i++){
+								for(int j = 0; j < 8; j++){
+									if(myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.GRAY)){
+										grayTiles++;
+									}
+									
+									if(myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)){
+										redTiles++;
+									}
+
+									if(((grayTiles + redTiles) == 81) || (grayTiles == 67)){
+										final JOptionPane pane = new JOptionPane("      Congratulations!");
+										final JDialog d = pane.createDialog("      YOU WIN!");
+										d.setLocation(myFrame.getHeight() + 330, myFrame.getWidth()-100);
+										d.setSize(100, 100);
+										d.setVisible(true);
+										try {
+											ActionListener();
+										} catch (IOException e1) {
+											// TODO Auto-generated catch block
+											e1.printStackTrace();
+										}
+										break;
+									}
+								}
+							}
 						}
 					}
 				}
