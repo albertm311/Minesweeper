@@ -98,17 +98,20 @@ public class MyMouseAdapter extends MouseAdapter {
 							}else{
 								if(myPanel.isMine(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 									Color newColor = Color.BLACK;
-									myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
-									myPanel.repaint();	
-
-									JOptionPane.showMessageDialog(myFrame, "BOOM!...Game Over!");
+									for(int i = 0; i < 9 ; i++){
+										for (int j = 0; j < 9 ; j++){
+											if (myPanel.minesOnField[i][j] == true){
+												myPanel.mineField[i][j] = newColor;
+												myPanel.repaint();
+											}
+										}
+									}
+									JOptionPane.showMessageDialog(myFrame, "BOOM! - Game Over!");
 									ActionListener();
 									break;
 								}
 							}
-
 							Color newColor = Color.GRAY;
-
 							myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();
 						}
@@ -163,15 +166,13 @@ public class MyMouseAdapter extends MouseAdapter {
 			// Do nothing
 			break;
 		}
-	}
+	}	
 	private void ActionListener() {
-		//System.exit(0);
-		Main.masterFrame.dispose();
-		MyMouseAdapter.flags = 10;
-		TimerCounter.seconds = 0;
-		Main.main(null);
-		//Main.masterFrame.dispose();
-		;
+		System.exit(0);
+//		Main.masterFrame.dispose();
+//		MyMouseAdapter.flags = 10;
+//		TimerCounter.seconds = 0;
+//		
 
 	}
 

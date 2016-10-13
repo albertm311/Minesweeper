@@ -11,6 +11,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Color;
@@ -19,18 +26,52 @@ public class Main {
 	static JLabel lblTime;
 	private static JLabel lblFlags;
 	static JFrame masterFrame;
-	//static String flagsMax = MyMouseAdapter.getFlags();
+	public static AudioInputStream audioStream;
+	public static Clip audioClip;
+	public static File audioFile;
+	
+	
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		masterFrame = initialize();
 		masterFrame.setVisible(true);
-		MyMouseAdapter.getFlags();
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
-	private static JFrame initialize(){
+	private static JFrame initialize() throws IOException{
+		
+		//allows music to be played while playing
+	    audioFile = new File("AudioFiles/song.wav");
+	    try {
+	        audioStream = AudioSystem.getAudioInputStream(audioFile);
+	    } catch (UnsupportedAudioFileException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    AudioFormat format = audioStream.getFormat();
+	    DataLine.Info info = new DataLine.Info(Clip.class, format);
+	    
+	    try {
+	        audioClip = (Clip) AudioSystem.getLine(info);
+	        audioClip.open(audioStream);
+	        audioClip.start();
+	        audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+	    } catch (LineUnavailableException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+	    
+	    
 
 		JFrame myFrame = new JFrame("MineSweeper");
-		myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setLocation(400, 150);
 		myFrame.setSize(465, 400);
 
@@ -90,7 +131,14 @@ public class Main {
 					timer.cancel();
 					TimerCounter.seconds = 0;
 					masterFrame.dispose();
-					masterFrame = initialize();
+					audioClip.stop();
+					try {
+						masterFrame = initialize();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
 					masterFrame.setVisible(true);
 				}
 			}
@@ -100,10 +148,11 @@ public class Main {
 		lblTime.setBounds(313, 28, 136, 15);
 		lblTime.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTime.setFont(new Font("Goudy Stout", Font.PLAIN, 12));
-		myPanel.add(lblTime);
-
+		myPanel.add(lblTime);	
+		
 		return myFrame;
 	}
+	
 }
 
 

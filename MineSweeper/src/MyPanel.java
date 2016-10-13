@@ -24,7 +24,7 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridY = 0;
 	public Color[][] mineField = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
-		
+
 		for (int i = 0; i < numberMinesEasy; i++){
 			for (int j = 0; j < 1; j++){
 				Random generator = new Random();
@@ -33,6 +33,9 @@ public class MyPanel extends JPanel {
 
 				if(minesOnField[x][y] == false){
 					minesOnField[x][y] = true;
+				}
+				else {
+					i--;
 				}
 			}
 		}
@@ -151,8 +154,8 @@ public class MyPanel extends JPanel {
 
 	public boolean isMine(int x, int y){
 		if(minesOnField[x][y] == true){
-
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
