@@ -34,6 +34,9 @@ public class MyPanel extends JPanel {
 				if(minesOnField[x][y] == false){
 					minesOnField[x][y] = true;
 				}
+				else{
+					i--;
+				}
 			}
 		}
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {    //Use of "random" to prevent unwanted Eclipse warning
@@ -151,8 +154,8 @@ public class MyPanel extends JPanel {
 
 	public boolean isMine(int x, int y){
 		if(minesOnField[x][y] == true){
-
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
