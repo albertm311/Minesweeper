@@ -4,7 +4,6 @@ public class TimerCounter {
 
 	public static String getTime()
 	{
-
 		if(seconds < 10)
 			return "00"+ seconds;
 		else if(seconds < 100)
@@ -16,7 +15,5 @@ public class TimerCounter {
 	public void doStuff(){
 		//do stuff here
 		seconds++;
-
 	}
-	
 }
