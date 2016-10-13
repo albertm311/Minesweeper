@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 public class MyMouseAdapter extends MouseAdapter {
 	public static int flags = 14;
 	//public static JLabel numbers;
-
+//---
 	public void mousePressed(MouseEvent e) {
 		Component c = e.getComponent();
 		while (!(c instanceof JFrame)) {
