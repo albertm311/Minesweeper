@@ -1,10 +1,14 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Insets;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
@@ -15,7 +19,7 @@ public class MyPanel extends JPanel {
 	private static final int TOTAL_COLUMNS = 9;
 	private static final int TOTAL_ROWS = 9;   //Last row has only one cell
 
-	public int numberMinesEasy = 10;
+	public int numberMinesEasy = 15;
 	public boolean minesOnField[][] = new boolean[TOTAL_COLUMNS][TOTAL_ROWS];
 
 	public int x = -1;
@@ -24,7 +28,7 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridY = 0;
 	public Color[][] mineField = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
-		
+
 		for (int i = 0; i < numberMinesEasy; i++){
 			for (int j = 0; j < 1; j++){
 				Random generator = new Random();
@@ -33,6 +37,9 @@ public class MyPanel extends JPanel {
 
 				if(minesOnField[x][y] == false){
 					minesOnField[x][y] = true;
+				}
+				else {
+					i--;
 				}
 			}
 		}
@@ -54,12 +61,9 @@ public class MyPanel extends JPanel {
 		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 1; y < TOTAL_ROWS; y++) {
 				mineField[x][y] = Color.WHITE;
-
 			}
 		}
 	}
-
-
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -72,11 +76,16 @@ public class MyPanel extends JPanel {
 		int width = x2 - x1;
 		int height = y2 - y1;
 
-		//Paint the background
-		Color myNewBlue = new Color (178, 255, 102);  //creates your new color
-		g.setColor(myNewBlue);
-		g.fillRect(x1, y1, width + 1, height + 1);
+		//Set the background
+		Image img = null;
+		try {
+		 img = ImageIO.read(new File("Images/fantaworld.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		g.drawImage(img, x1, y1, width + 1, height + 1, null);
 
+		
 		//Draw the grid minus the bottom row (which has only one cell)
 		//By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS)
 		g.setColor(Color.BLACK);
@@ -86,7 +95,6 @@ public class MyPanel extends JPanel {
 		for (int x = 0; x < TOTAL_COLUMNS + 1; x++) {
 			g.drawLine(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y, x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS)));
 		}
-
 		//Paint cell colors
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
@@ -148,11 +156,10 @@ public class MyPanel extends JPanel {
 		}
 		return y;
 	}
-
 	public boolean isMine(int x, int y){
 		if(minesOnField[x][y] == true){
-
+			return true;
 		}
-		return true;
+		return false;
 	}
 }

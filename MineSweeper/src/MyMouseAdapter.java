@@ -1,17 +1,15 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
-
+import java.io.IOException;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MyMouseAdapter extends MouseAdapter {
-	private Random generator = new Random();
-	public static int flags = 10;
+	public static int flags = 14;
 
 	public void mousePressed(MouseEvent e) {
 		Component c = e.getComponent();
@@ -21,7 +19,7 @@ public class MyMouseAdapter extends MouseAdapter {
 				return;
 			}
 		}
-		
+
 
 		JFrame myFrame = (JFrame) c;
 		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);
@@ -98,18 +96,32 @@ public class MyMouseAdapter extends MouseAdapter {
 							}else{
 								if(myPanel.isMine(myPanel.mouseDownGridX, myPanel.mouseDownGridY)){
 									Color newColor = Color.BLACK;
-									myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
-									myPanel.repaint();	
-									
-									JOptionPane.showMessageDialog(myFrame, "BOOM!...Game Over!");
-									ActionListener();
+									for(int i = 0; i < 9 ; i++){
+										for (int j = 0; j < 9 ; j++){
+											if (myPanel.minesOnField[i][j] == true){
+												myPanel.mineField[i][j] = newColor;
+												myPanel.repaint();
+											}
+										}
+									}
+
+									final JOptionPane pane = new JOptionPane("      Game Over!");
+									final JDialog d = pane.createDialog("      BOOM!");
+									d.setLocation(myFrame.getHeight() + 330, myFrame.getWidth()-100);
+									d.setSize(100, 100);
+									d.setVisible(true);
+									try {
+										ActionListener();
+									} catch (IOException e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+									}
 									break;
 								}
 							}
-
 							Color newColor = Color.GRAY;
-
 							myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							checkBombs(myPanel, myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 							myPanel.repaint();
 						}
 					}
@@ -163,16 +175,11 @@ public class MyMouseAdapter extends MouseAdapter {
 			// Do nothing
 			break;
 		}
-	}
-	private void ActionListener() {
-	//System.exit(0);
-		Main.masterFrame.dispose();
-		MyMouseAdapter.flags = 10;
-		TimerCounter.seconds = 0;
-	Main.main(null);
-		//Main.masterFrame.dispose();
-		;
-
+	}	
+	private void ActionListener() throws IOException {
+		//System.exit(0);
+		Main.masterFrame =  Main.reinitialize();
+		Main.masterFrame.setVisible(true);
 	}
 
 	public static String getFlags(){
@@ -180,6 +187,137 @@ public class MyMouseAdapter extends MouseAdapter {
 			return "0";
 		}
 		return "" + flags;
+	}
 
+	public void checkBombs (MyPanel panel, int x, int y){
+
+		int counter = 0;
+
+		if((x -1 >= 0 && x -1 < 9)
+				&&  (y >= 0 && y < 9) 
+				&& panel.isMine(x -1, y)){
+			counter ++;
+		} 
+		if((x -1 >= 0 && x -1 < 9)
+				&&  (y-1 >= 0 && y -1 < 9) 
+				&& panel.isMine(x -1, y -1 )){
+			counter ++;
+		} 
+
+		if((x  >= 0 && x < 9)
+				&&  (y-1 >= 0 && y-1 < 9) 
+				&& panel.isMine(x, y-1)){
+			counter ++;
+		} 
+		if((x +1 >= 0 && x + 1< 9)
+				&&  (y >= 0 && y < 9) 
+				&& panel.isMine(x + 1, y)){
+			counter ++;
+		} 
+		if((x + 1 >= 0 && x + 1 < 9)
+				&&  (y + 1>= 0 && y + 1 < 9) 
+				&& panel.isMine(x + 1, y + 1)){
+			counter ++;
+		} 
+		if((x >= 0 && x < 9)
+				&&  (y + 1>= 0 && y + 1< 9) 
+				&& panel.isMine(x, y + 1)){
+			counter ++;
+		} 
+		if((x -1 >= 0 && x -1 < 9)
+				&&  (y + 1 >= 0 && y + 1 < 9) 
+				&& panel.isMine(x -1, y + 1)){
+			counter ++;
+		} 
+		if((x + 1 >= 0 && x + 1 < 9)
+				&&  (y - 1 >= 0 && y - 1 < 9) 
+				&& panel.isMine(x + 1, y - 1)){
+			counter ++;
+		} 
+
+		//
+		if (counter > 0){
+			//Set The Number on Tile
+			Color newColor =  Color.GRAY;
+			panel.mineField[x][y] = newColor;
+			System.out.println(counter);
+
+		} else {
+			//If Not Mine Found
+			if((x - 1 >= 0 && x - 1 < 9)
+					&&  (y >= 0 && y < 9) 
+					&& !panel.mineField[x - 1][y].equals(Color.GRAY) 
+					&& !panel.mineField[x - 1][y].equals(Color.RED) 
+					&& !panel.isMine(x - 1, y)){
+				Color newColor =  Color.GRAY;
+				panel.mineField[x - 1][y] = newColor;
+				checkBombs(panel, x - 1, y);
+			} 
+			if((x - 1 >= 0 && x - 1 < 9)
+					&&  (y -1 >= 0 && y -1 < 9) 
+					&& !panel.mineField[x - 1][y -1].equals(Color.GRAY) 
+					&& !panel.mineField[x - 1][y -1].equals(Color.RED) 
+					&& !panel.isMine(x - 1, y -1)){
+				Color newColor =  Color.GRAY;
+				panel.mineField[x - 1][y -1] = newColor;
+				checkBombs(panel, x - 1, y -1);
+			} 
+			if((x - 1 >= 0 && x - 1 < 9)
+					&&  (y + 1 >= 0 && y + 1 < 9) 
+					&& !panel.mineField[x - 1][y + 1].equals(Color.GRAY) 
+					&& !panel.mineField[x - 1][y + 1].equals(Color.RED) 
+					&& !panel.isMine(x - 1, y + 1)){
+				Color newColor =  Color.GRAY;
+				panel.mineField[x - 1][y + 1] = newColor;
+				checkBombs(panel, x - 1, y + 1);
+			} 
+			if((x >= 0 && x < 9)
+					&&  (y -1 >= 0 && y -1 < 9) 
+					&& !panel.mineField[x][y -1].equals(Color.GRAY) 
+					&& !panel.mineField[x][y -1].equals(Color.RED) 
+					&& !panel.isMine(x, y -1)){
+				Color newColor =  Color.GRAY;
+				panel.mineField[x][y -1] = newColor;
+				checkBombs(panel, x, y -1);
+			} 
+			if((x >= 0 && x < 9)
+					&&  (y + 1 >= 0 && y + 1 < 9) 
+					&& !panel.mineField[x][y + 1].equals(Color.GRAY) 
+					&& !panel.mineField[x][y + 1].equals(Color.RED) 
+					&& !panel.isMine(x, y + 1)){
+				Color newColor =  Color.GRAY;
+				panel.mineField[x][y + 1] = newColor;
+				checkBombs(panel, x, y + 1);
+			} 
+			if((x + 1 >= 0 && x + 1 < 9)
+					&&  (y >= 0 && y < 9) 
+					&& !panel.mineField[x + 1][y].equals(Color.GRAY) 
+					&& !panel.mineField[x + 1][y].equals(Color.RED) 
+					&& !panel.isMine(x + 1, y)){
+				Color newColor =  Color.GRAY;
+				panel.mineField[x + 1][y] = newColor;
+				checkBombs(panel, x + 1, y);
+			} 
+			if((x + 1 >= 0 && x + 1 < 9)
+					&&  (y - 1>= 0 && y -1 < 9) 
+					&& !panel.mineField[x + 1][y -1].equals(Color.GRAY) 
+					&& !panel.mineField[x + 1][y - 1].equals(Color.RED) 
+					&& !panel.isMine(x + 1, y - 1)){
+				Color newColor =  Color.GRAY;
+				panel.mineField[x + 1][y - 1] = newColor;
+				checkBombs(panel, x + 1, y - 1);
+			} 
+			if((x + 1 >= 0 && x + 1 < 9)
+					&&  (y + 1 >= 0 && y + 1 < 9) 
+					&& !panel.mineField[x + 1][y + 1].equals(Color.GRAY) 
+					&& !panel.mineField[x + 1][y + 1].equals(Color.RED) 
+					&& !panel.isMine(x + 1, y + 1)){
+				Color newColor =  Color.GRAY;
+				panel.mineField[x + 1][y + 1] = newColor;
+				checkBombs(panel, x + 1, y + 1);
+			} 
+		}
 	}
 }
+
+
