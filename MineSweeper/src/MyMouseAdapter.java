@@ -6,13 +6,15 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class MyMouseAdapter extends MouseAdapter {
 	public static int flags = 14;
-	//public static JLabel numbers;
-//---
+	public static int grayTiles = 0;
+	public static int redTiles = 0;
+	
+	
+
 	public void mousePressed(MouseEvent e) {
 		Component c = e.getComponent();
 		while (!(c instanceof JFrame)) {
@@ -21,7 +23,6 @@ public class MyMouseAdapter extends MouseAdapter {
 				return;
 			}
 		}
-
 
 		JFrame myFrame = (JFrame) c;
 		MyPanel myPanel = (MyPanel) myFrame.getContentPane().getComponent(0);
@@ -105,10 +106,8 @@ public class MyMouseAdapter extends MouseAdapter {
 										}
 									}
 
-									final JOptionPane pane = new JOptionPane("      Game Over!");
-									final JDialog d = pane.createDialog("      BOOM!");
-									d.setLocation(myFrame.getHeight() + 330, myFrame.getWidth()-100);
-									d.setSize(100, 100);
+									final JOptionPane pane = new JOptionPane("Game Over!");
+									final JDialog d = pane.createDialog("	BOOM!");
 									d.setVisible(true);
 									try {
 										ActionListener();
@@ -123,6 +122,30 @@ public class MyMouseAdapter extends MouseAdapter {
 							myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							checkBombs(myPanel, myPanel.mouseDownGridX, myPanel.mouseDownGridY);
 							myPanel.repaint();
+							
+							grayTiles++;
+							boolean hasWon = true;
+							for (int i = 0; i < 8 ; i++){
+								for (int j = 0; j < 8; j++){
+									if (myPanel.mineField[i][j].equals(Color.WHITE)
+											&& !myPanel.isMine(i, j)) {
+										hasWon = false;
+										break;
+									} if(!hasWon){
+										break;
+									}														
+								}
+							}
+							if (hasWon){
+								final JOptionPane pane = new JOptionPane("YOU WIN!");
+								final JDialog d = pane.createDialog("	CONGRATULATIONS!");
+								d.setVisible(true);
+								try {
+									ActionListener();
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}		
+							}
 						}
 					}
 				}
@@ -154,6 +177,7 @@ public class MyMouseAdapter extends MouseAdapter {
 								if (flags > 0){
 									Color newColor = Color.RED;
 									flags--;
+									redTiles ++;
 									myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 									myPanel.repaint();
 								}
@@ -161,6 +185,7 @@ public class MyMouseAdapter extends MouseAdapter {
 								break;
 							} else if(myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(Color.RED)){
 								flags ++;
+								redTiles--;
 								Color newColor = Color.WHITE;
 								myPanel.mineField[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 								myPanel.repaint();
@@ -188,7 +213,8 @@ public class MyMouseAdapter extends MouseAdapter {
 		}
 		return "" + flags;
 	}
-
+	
+//Check each tile for adjacent mines
 	public void checkBombs (MyPanel panel, int x, int y){
 
 		int counter = 0;
@@ -234,25 +260,14 @@ public class MyMouseAdapter extends MouseAdapter {
 				&& panel.isMine(x + 1, y - 1)){
 			counter ++;
 		} 
-
 		//Set The Number on Tile
 		if (counter > 0) {
 
-			Color newColor =  Color.BLUE;
-			panel.mineField[x][y] = newColor;
-
-
-
-
-			JLabel numbers = new JLabel("" + counter);
-			//numbers.setText("" + counter);
-			numbers.setLocation(x,y);
-			numbers.setVisible(true);
-			panel.add(numbers);
-			panel.repaint();
-			System.out.println(counter);
-
-		}else {
+			Color newColor = Color.LIGHT_GRAY;
+			panel.mineField[x][y] = newColor;	
+			panel.numGrid[x][y] =  counter + "";
+			
+		} else {
 			//If Not Mine Found
 			if((x - 1 >= 0 && x - 1 < 9)
 					&&  (y >= 0 && y < 9) 
