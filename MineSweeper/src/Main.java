@@ -44,7 +44,7 @@ public class Main {
 		audioClip.stop();
 		return initialize();
 	}
-
+//Initialize the frame
 	private static JFrame initialize() throws IOException{
 		//allows music to be played while playing
 		audioFile = new File("AudioFiles/sound2.wav");
@@ -87,6 +87,7 @@ public class Main {
 		lblFlags.setHorizontalAlignment(SwingConstants.CENTER);
 		myPanel.add(lblFlags);
 
+		//Set the Timer
 		tasknew = new TimerCounter();
 		timer = new Timer();		
 		lblTime = new JLabel();
@@ -102,9 +103,11 @@ public class Main {
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				lblFlags.setText("Flags: " + MyMouseAdapter.getFlags() );	
+				lblFlags.setText("Flags: " + MyMouseAdapter.getFlags() );
 			}
 		}, 100,100);
+		
+		//Set reset button
 		JButton btnReset = new JButton();
 		btnReset.setToolTipText("RESET");
 		try {
@@ -132,7 +135,6 @@ public class Main {
 		lblTime.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTime.setFont(new Font("Goudy Stout", Font.PLAIN, 12));
 		myPanel.add(lblTime);	
-
 		return myFrame;
 	}
 }

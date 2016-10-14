@@ -1,4 +1,6 @@
 public class TimerCounter {
+	
+	//Class to set the Timer
 
 	public static int seconds = 0;
 

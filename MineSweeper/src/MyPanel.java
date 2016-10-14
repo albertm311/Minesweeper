@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
@@ -9,6 +10,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
+	
 	private static final long serialVersionUID = 3426940946811133635L;
 	private static final int GRID_X = 25;
 	private static final int GRID_Y = 25;
@@ -52,13 +54,16 @@ public class MyPanel extends JPanel {
 		}
 		for (int x = 0; x < TOTAL_COLUMNS; x++) { 
 			mineField[x][0] = Color.WHITE;
+			numGrid[x][0] =  ""; 
 		}
 		for (int y = 0; y < TOTAL_ROWS; y++) { 
 			mineField[0][y] = Color.WHITE;
+			numGrid[0][y] =  ""; 
 		}
 		for (int x = 1; x < TOTAL_COLUMNS; x++) {   //The rest of the grid
 			for (int y = 1; y < TOTAL_ROWS; y++) {
 				mineField[x][y] = Color.WHITE;
+				numGrid[x][y] =  ""; 
 			}
 		}
 	}
@@ -100,6 +105,10 @@ public class MyPanel extends JPanel {
 					Color c = mineField[x][y];
 					g.setColor(c);
 					g.fillRect(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 1, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 1, INNER_CELL_SIZE, INNER_CELL_SIZE);
+					Color purple =  new Color(153, 0, 153);
+					g.setColor(purple);
+					g.setFont(new Font("Goudy Stout", Font.PLAIN, 14));
+					g.drawString(numGrid[x][y], x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)) + 10, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)) + 20);
 				}
 			}
 		}
