@@ -29,6 +29,9 @@ public class MyPanel extends JPanel {
 	public Color[][] mineField = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 
+		
+		//Generates the mines for the Field
+		//If a tile is already a mine, it generates a new mine in a different tile
 		for (int i = 0; i < numberMinesEasy; i++){
 			for (int j = 0; j < 1; j++){
 				Random generator = new Random();
@@ -90,7 +93,7 @@ public class MyPanel extends JPanel {
 
 		
 		//Draw the grid minus the bottom row (which has only one cell)
-		//By default, the grid will be 10x10 (see above: TOTAL_COLUMNS and TOTAL_ROWS)
+		//By default, the grid will be 9x9 (see above: TOTAL_COLUMNS and TOTAL_ROWS)
 		g.setColor(Color.BLACK);
 		for (int y = 0; y <= TOTAL_ROWS; y++) {
 			g.drawLine(x1 + GRID_X, y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)), x1 + GRID_X + ((INNER_CELL_SIZE + 1) * TOTAL_COLUMNS), y1 + GRID_Y + (y * (INNER_CELL_SIZE + 1)));
@@ -98,7 +101,7 @@ public class MyPanel extends JPanel {
 		for (int x = 0; x < TOTAL_COLUMNS + 1; x++) {
 			g.drawLine(x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y, x1 + GRID_X + (x * (INNER_CELL_SIZE + 1)), y1 + GRID_Y + ((INNER_CELL_SIZE + 1) * (TOTAL_ROWS)));
 		}
-		//Paint cell colors
+		//Paint cell colors and writes the number of mines near the tiles
 		for (int x = 0; x < TOTAL_COLUMNS; x++) {
 			for (int y = 0; y < TOTAL_ROWS; y++) {
 				if ((x == 0) || (y != TOTAL_ROWS)) {
@@ -163,6 +166,8 @@ public class MyPanel extends JPanel {
 		}
 		return y;
 	}
+	
+	//Determines if a tile is a mine or not
 	public boolean isMine(int x, int y){
 		if(minesOnField[x][y] == true){
 			return true;

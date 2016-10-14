@@ -46,7 +46,7 @@ public class Main {
 	}
 //Initialize the frame
 	private static JFrame initialize() throws IOException{
-		//allows music to be played while playing
+		//Allows music to be played while playing
 		audioFile = new File("AudioFiles/sound2.wav");
 		try {
 			audioStream = AudioSystem.getAudioInputStream(audioFile);
